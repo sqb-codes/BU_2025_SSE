@@ -22,4 +22,4 @@ EXPOSE 3000
 
 # Start the application
 # This command will run the application when the container starts
-CMD ["node", "server.js"]
+CMD ["npm", "run", "dev"]
