@@ -1,0 +1,12 @@
+Docker Commands
+
+CMD: docker build .
+- build docker image
+
+CMD: docker build -t img-name .
+- build docker image with a name
+
+CMD: docker run -d -p 3000:3000 --name node-container node-img
+- will start a container
+- -d stands for detach mode
+- -p stands for port

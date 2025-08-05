@@ -1,0 +1,52 @@
+Phase-1:
+- Introduction to Enterprise Application Development
+  - Monolithic vs Microservice Architecture
+  - Scalibility, Performance of applications
+  - MERN
+  - Microservice Architecture
+  - Break down application
+
+Phase-2:
+- Node JS
+  - Creating Server and API
+  - Understand Event-driven and non-blocking I/O
+- RESTful APIs
+  - Routes, Request Handling, Middlewares
+  - Authentication (JWT)
+  - Role-Based Access
+- Microservice Design
+  - Breaking down application into smaller services
+  - Communication b/w Microservices 
+  - Handling inter-service communication
+- Service Discover & Load Balancing
+
+Phase-3:
+- Build Frontend for Microservices
+- Make API request
+- Data management and caching
+
+Phase-4:
+- Docker
+- Docker Compose
+- Docker Networking & Volumes
+
+Phase-5:
+- Version Control
+- CI/CD using GitHub Action/GitLab
+- Container Orchestration with Kubernetes
+
+
+Monolithic Architecture
+- Entire application is built using as a single codebase
+- Tightly coupling: Components are tightly coupled, which means changes in one module will effect other modules
+Single database: Typically uses single database
+
+
+Microservices Architecture
+- Divides the application into small and independent services that communicates over APIs
+- Each microservice focuses on a single business functionality and responsible for managings its own data
+- Multiple services
+- Independent Development/Depolyment
+- Loose coupling
+- Multiple Databases
+
