@@ -1,0 +1,28 @@
+Docker Notes
+
+1. Setup a Express Server
+2. Build docker image
+docker build .
+docker build -t express-img .
+
+3. list images
+docker images
+
+4. Run container once image is ready
+docker run -d -p 3000:3000 --name express-container express-img
+-d = detach mode
+-p = port forwarding
+
+5. Stop container
+docker stop container-name
+
+Stop & remove
+docker rm container-name -f
+
+6. Bind mount and sync volumes
+For mac users
+docker run -v "$(pwd)":/app -d -p 3000:3000 --name express-container express-img
+
+For windows
+docker run -v %cd%:/app -d -p 3000:3000 --name express-container express-img
+
