@@ -24,7 +24,7 @@ Docker Commands
 
 1. Build Image
 - docker build .
-- docker build -t express-app-img
+- docker build -t express-app-img .
 
 2. Run container
 - docker run -d -p 3000:3000 --name express-container express-app-img
@@ -38,6 +38,50 @@ Docker Commands
 4. Bind mount
 For mac
 - docker run -v "$(pwd)":/app -d -p 3000:3000 --name express-container express-app-img
+-v = volume, it creates anonymous volumes
 
 For windows
 - docker run -v %cd%:/app -d -p 3000:3000 --name express-container express-app-img
+
+Switch to docker directory file system from terminal
+- docker exec -it express-container bash
+
+If we delete node_modules from local then it will be deleted from docker as well
+To prevent this:
+- docker run -v "$(pwd)":/app -v /app/node_modules -d -p 3000:3000 --name express-container express-app-img
+
+
+Read only Mount Volume:
+- If we create or delete or update any file in docker then it will impact our same file inside working directory
+- so we need to create read only bind mount
+- docker run -v "$(pwd)":/app:ro -v /app/node_modules -d -p 3000:3000 --name express-container express-app-img
+
+Delete volume + stop container
+- docker remove express-container -fv
+
+Using environment variables with Docker
+- docker run -v "$(pwd)":/app:ro -v /app/node_modules --env PORT=4000 -d -p 3000:4000 --name express-container exp-img
+
+
+What if we want to create multiple environment variables
+- we can create a new .env file and pass that file
+- docker run -v "$(pwd)":/app:ro -v /app/node_modules --env-file ./.env -d -p 3000:4000 --name express-container exp-img
+
+======================================
+
+Docker Compose
+1. Break down command of running a docker container
+2. Handle multiple containers
+3. Handle dev, test and prod environment
+
+Create docker-compose.yaml
+
+start docker
+Command: docker-compose up -d
+
+down docker
+Command: docker-compose down
+
+delete anonymous volume as well
+Command: docker-compose down -v
+
