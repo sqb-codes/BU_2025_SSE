@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  # Image for the Express app
+  exp-img:
+    build:
+      context: .
+    ports:
+      - "3000:4000"
+    volumes:
+      - .:/app:ro
+      - /app/node_modules
+    # environment:
+    #   - PORT=3000
+    env_file:
+      - .env
+    # command: ["node", "server.js"]
