@@ -1,0 +1,44 @@
+Docker Commands
+
+CMD: docker build .
+- build docker image
+
+CMD: docker build -t img-name .
+- build docker image with a name
+
+CMD: docker run -d -p 3000:3000 --name node-container node-img
+- will start a container
+- -d stands for detach mode
+- -p stands for port
+
+Stop container
+docker stop container-name
+
+Remove container
+docker rm container-name
+
+Forcefully stop container (without stopping container, remove it)
+docker rm container-name -f
+
+Bind Mount Volumes
+For Mac
+CMD: docker run -v "$(pwd)":/app -d -p 3000:3000 --name node-container node-img
+-v = volumes - anonymous volumes
+
+I don't want to sync node_modules folder
+CMD: docker run -v "$(pwd)":/app /app/node_modules -d -p 3000:3000 --name node-container node-img
+
+For Windows
+CMD: docker run -v %cd%:/app -d -p 3000:3000 --name node-container node-img
+
+
+Read only mount volumes
+CMD: docker run -v "$(pwd)":/app:ro -v /app/node_modules -d -p 3000:3000 --name node-container node-img
+
+
+Passing environment variables
+CMD: docker run -v "$(pwd)":/app:ro -v /app/node_modules -env PORT=4000 -d -p 3000:3000 --name node-container node-img
+
+Passing env file
+CMD: docker run -v "$(pwd)":/app:ro -v /app/node_modules --env-file ./.env -d -p 3000:4000 --name node-container node-img
+
