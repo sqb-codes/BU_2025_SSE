@@ -41,7 +41,7 @@ For mac
 -v = volume, it creates anonymous volumes
 
 For windows
-- docker run -v %cd%:/app -d -p 3000:3000 --name express-container express-app-img
+- docker run -v "${pwd}:/app" -d -p 3000:3000 --name express-container express-img
 
 Switch to docker directory file system from terminal
 - docker exec -it express-container bash
