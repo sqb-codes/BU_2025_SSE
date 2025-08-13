@@ -24,5 +24,5 @@ For mac users
 docker run -v "$(pwd)":/app -d -p 3000:3000 --name express-container express-img
 
 For windows
-docker run -v "${cd}:/app" -d -p 3000:3000 --name express-container express-img
+docker run -v "${pwd}:/app" -d -p 3000:3000 --name express-container express-img
 
