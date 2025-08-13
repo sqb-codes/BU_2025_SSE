@@ -29,7 +29,7 @@ I don't want to sync node_modules folder
 CMD: docker run -v "$(pwd)":/app /app/node_modules -d -p 3000:3000 --name node-container node-img
 
 For Windows
-CMD: docker run -v %cd%:/app -d -p 3000:3000 --name node-container node-img
+CMD: docker run -v "${pwd}:/app" -d -p 3000:3000 --name express-container express-img
 
 
 Read only mount volumes
