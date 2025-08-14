@@ -1,0 +1,59 @@
+Docker commands
+
+1. List all images
+docker images
+
+2. List all containers
+docker ps
+docker ps -a
+
+3. Build image
+docker build .
+docker build -t node-img .
+
+4. Run container
+docker run -d -p 3000:3000 --name express-container node-img
+-d = detach mode
+-p = port forwarding
+
+5. Bind mount volume
+
+For mac
+docker run -v "$(pwd)":/app -d -p 3000:3000 --name express-container node-img
+
+For windows - powershell
+docker run -v "${pwd}:/app" -d -p 3000:3000 --name express-container node-img
+
+6. Stop container
+docker stop container-name
+
+Stop + Remove
+docker rm container-name -f
+
+7. Passing environment variables
+docker run -v "$(pwd)":/app -d -p 3000:4000 --env PORT=4000 --name express-container exp-thu-eve
+
+docker run -v "$(pwd)":/app -d -p 3000:4000 --env-file ./.env --name express-container exp-thu-eve
+
+==============================
+
+Docker Compose
+- because docker command is getting complicated
+- to handle multiple containers
+- to handle different environment (dev, test, prod)
+
+Starting Docker Compose
+- docker-compose up -d
+
+Down Docker Compose
+- docker-compose down -v
+-v for deleting anonymous volumes 
+
+Re-build image
+- docker-compose up -d --build
+
+Configure MongoDB
+1. Add mongo service inside docker-compose
+2. CMD: docker exec -it backend-dev-mongo-1 bash
+3. CMD: cd bin
+4. CMD: mongosh -u root -p root

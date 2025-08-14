@@ -1,0 +1,31 @@
+services:
+  # First we define the service for our Express application
+  # Create image from Dockerfile
+  express-app:
+  # Build the Docker image
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    # Port Forwarding
+    # Map port 3000 on the host to port 4000 in the container
+    # This means that when you access localhost:3000, it will be forwarded to the
+      - "3000:4000"
+    # environment:
+    #   - PORT=3000
+    env_file:
+      - .env
+    volumes:
+    # Mount the current directory to /app in the container
+    # This allows you to make changes to your code without rebuilding the image
+      - .:/app
+      # Mount node_modules to avoid conflicts with host's node_modules
+      - /app/node_modules
+    command: npm run dev
+
+  # Define the service for MongoDB
+  mongo:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
