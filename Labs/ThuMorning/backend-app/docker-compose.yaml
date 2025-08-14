@@ -1,0 +1,30 @@
+services:
+  exp-app-thu-mor:
+    # This service builds the Express application
+    # First create the image using the Dockerfile
+    build:
+      # Build the image from the Dockerfile in the current directory
+      context: .
+    ports:
+      # Expose port 4000 of the container to port 3000 on the host 
+      - "3000:4000"
+    volumes:
+    # Mount the current directory to /app in the container
+    # But ignore node_modules to prevent conflicts
+      - ./:/app
+      - /app/node_modules
+    # environment:
+    #   - PORT=3000
+    env_file:
+    # Load environment variables from the .env file
+      - .env
+    command: npm run dev
+
+  
+  mongo:
+    # This service runs a MongoDB database
+    # Use the official MongoDB image
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root

@@ -1,0 +1,75 @@
+Docker Commands
+
+1. Download docker desktop
+2. For windows
+    - Open powershell
+    - Run: wsl --install
+3. Initiate a new project of Node JS
+    - npm init -y
+4. Install express
+5. Configure and run a simple express server
+
+6. Explore docker:
+    - list all images
+        : docker images
+    - list all running containers
+        : docker ps
+        : docker ps -a
+
+7. Build image: 
+docker build .
+docker build -t node-app-img .
+
+8. Run container
+docker run -d -p 3000:3000 --name express-app-container node-app-img
+-d = detach mode
+-p = port forwarding
+
+9. Stop container
+docker stop container-name
+
+10. Stop and remove
+docker rm container-name -f
+-f = forcefully stop the container
+
+11. Bind mount anonymous volumes
+- sync local working dir with app directory of Docker
+
+For mac users
+CMD: docker run -v "$(pwd)":/app -d -p 3000:3000 --name express-app-container node-app-img
+
+For windows users - powershell
+CMD: docker run -v "{pwd}:/app" -d -p 3000:3000 --name express-app-container node-app-img
+
+
+Passing environment variable:
+CMD: docker run -v "$(pwd)":/app -d -p 3000:4000 --env PORT=4000 --name express-app-container exp-img-thu-mor
+
+Passing environment variable through a .env file
+CMD: docker run -v "$(pwd)":/app -d -p 3000:4000 --env-file ./.env --name express-app-container exp-img-thu-mor
+
+======================================
+
+Docker Compose
+- because docker command is getting too large
+- so it would be difficult to manage the docker command
+- what if we want to run multiple containers
+- we also wants to divide application into different environments (dev, test, prod)
+
+Step-1: Create a docker-compose.yaml
+Step-2: Start docker compose
+CMD: docker-compose up -d
+
+Down docker compose
+CMD: docker-compose down -v
+
+Start Mongo DB
+- Add mongo image
+- Add mongo username and password in environment
+- Start container
+
+Open Mongo Shell
+CMD: docker exec -it mongo_container_name bash
+CDM: cd bin
+CMD: mongosh -u "username" -p "password"
+
