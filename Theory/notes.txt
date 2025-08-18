@@ -50,3 +50,12 @@ Microservices Architecture
 - Loose coupling
 - Multiple Databases
 
+Required dependencies
+- npm install express mongoose bcrypt dotenv cors
+
+
+============================
+docker build -t user-img .
+docker run -v "$(pwd)":/app -d -p 1234:1234 --name user-auth-container user-img
+============================
+docker-compose up -d
