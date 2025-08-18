@@ -1,0 +1,21 @@
+services:
+  user-service:
+    # Image
+    build:
+      context: ./user-service
+    ports:
+      - "1234:1234"
+    volumes:
+      - ./user-service:/app
+
+  mongo-db:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    # Named volume for persistent storage
+    volumes:
+      - mongo-db-data:/data/db
+
+volumes:
+  mongo-db-data:
