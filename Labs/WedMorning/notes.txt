@@ -21,8 +21,14 @@ docker rm container-name -f
 
 6. Bind mount and sync volumes
 For mac users
-docker run -v "$(pwd)":/app -d -p 3000:3000 --name express-container express-img
+docker run -v "$(pwd)":/app -d -p 3000:3000 --name express-container express-img-wed
 
-For windows
+For windows - powershell
 docker run -v "${pwd}:/app" -d -p 3000:3000 --name express-container express-img
+
+7. Passing environment variables
+docker run -v "$(pwd)":/app -d -p 3000:4000 --env PORT=4000 --name express-container express-img-wed
+
+docker run -v "$(pwd)":/app -d -p 3000:4000 --env-file ./.env --name express-container express-img-wed
+======================================
 
