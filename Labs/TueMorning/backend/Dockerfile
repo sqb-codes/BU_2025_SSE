@@ -10,7 +10,12 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install dependencies
-RUN npm install
+# RUN npm install
+ARG NODE_ENV
+RUN if [ "$NODE_ENV" = "production" ]; \
+    then npm install --only=production; \
+    else npm install; \
+    fi
 
 # Copy the rest of the application code to the working directory
 COPY . .
@@ -18,8 +23,11 @@ COPY . .
 # Port configuration
 # This is the port on which the application will run
 # It should match the port used in the application code
-EXPOSE 3000
+# EXPOSE 3000
+ENV PORT=3000
+EXPOSE ${PORT}
 
 # Start the application
 # This command will run the application when the container starts
-CMD ["npm", "run", "dev"]
+# CMD ["npm", "run", "dev"]
+CMD ["node", "server.js"]

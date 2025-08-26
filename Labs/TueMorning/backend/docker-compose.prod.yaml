@@ -1,0 +1,7 @@
+services:
+  express-app:
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env
+    command: npm run prod

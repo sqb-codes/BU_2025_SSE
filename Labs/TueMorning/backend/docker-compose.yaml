@@ -1,0 +1,26 @@
+services:
+  express-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    # volumes:
+    #   - .:/app:ro
+    #   - /node_modules
+    # command: npm run dev
+  
+  mongodb:
+    image: mongo:latest
+    depends_on:
+      - express-app
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
