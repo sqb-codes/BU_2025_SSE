@@ -7,7 +7,7 @@ const createToken = (user) => {
         id: user._id,
         email: user.email,
         role: user.role
-    }, JWT_SECRET, { expiresIn: '1h' });
+    }, JWT_SECRET, { expiresIn: '1d' });
 };
 
 // Register a new user
@@ -26,5 +26,48 @@ exports.registerUser = async(req, res) => {
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(500).json({ message: 'Error registering User' });
+    }
+}
+
+exports.loginUser = async(req, res) => {
+    try {
+        const {email, password} = req.body;
+        
+        if (!email || !password) {
+            return res.status(400).json({message: "Please provide email and password both"});
+        }
+
+        const user = await User.findOne({email});
+        if(!user) {
+            return res.status(401).json({message: "Invalid email"});
+        }
+
+        const isMatch = await user.comparePassword(password);
+        if(!isMatch) {
+            return res.status(401).json({message: "Invalid Password"});
+        }
+
+        const token = createToken(user);
+        res.status(200).json({
+            status: "success",
+            data: {
+                user: {
+                    id: user._id,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    role: user.role
+                },
+                token
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Error while login',
+            error: error.message
+        })
     }
 }
