@@ -29,7 +29,7 @@ I don't want to sync node_modules folder
 CMD: docker run -v "$(pwd)":/app /app/node_modules -d -p 3000:3000 --name node-container node-img
 
 For Windows
-CMD: docker run -v "${pwd}:/app" -d -p 3000:3000 --name express-container express-img
+CMD: docker run -v "${pwd}:/app" -d -p 3000:3000 --name node-container node-img
 
 
 Read only mount volumes
@@ -41,4 +41,33 @@ CMD: docker run -v "$(pwd)":/app:ro -v /app/node_modules -env PORT=4000 -d -p 30
 
 Passing env file
 CMD: docker run -v "$(pwd)":/app:ro -v /app/node_modules --env-file ./.env -d -p 3000:4000 --name node-container node-img
+
+==========================
+
+Total Weightage = 5 Marks
+1. Build MongoDB image
+2. Configure MongoDB
+3. Connect Express Container with MongoDB Container
+
+=================================
+
+Docker compose commands:
+1. Start docker compose
+- docker-compose up -d
+
+Start docker compose + rebuild image
+- docker-compose up -d --build
+
+2. Remove/Stop docker compose
+- docker-commands down
+
+Remove/Stop docker compose + delete volumes
+- docker-commands down -v
+
+
+3. Run docker compose with dev environment
+- docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d --build
+
+Run docker compose with prod environment
+- docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d --build
 
