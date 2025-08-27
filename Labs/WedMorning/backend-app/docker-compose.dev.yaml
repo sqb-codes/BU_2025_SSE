@@ -1,0 +1,12 @@
+services:
+  express-app:
+    # Anonymous volumes - Bind mount and sync
+    # Sync local codebase with Docker image code
+    volumes:
+      - .:/app
+      - /node_modules
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./.env
+    command: npm run dev

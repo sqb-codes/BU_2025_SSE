@@ -7,9 +7,9 @@ services:
       - "3000:4000"
     # Anonymous volumes - Bind mount and sync
     # Sync local codebase with Docker image code
-    volumes:
-      - .:/app
-      - /node_modules
+    # volumes:
+    #   - .:/app
+    #   - /node_modules
     # environment:
     #   - PORT=4000
     env_file:
