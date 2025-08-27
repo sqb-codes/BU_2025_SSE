@@ -32,3 +32,35 @@ docker run -v "$(pwd)":/app -d -p 3000:4000 --env PORT=4000 --name express-conta
 docker run -v "$(pwd)":/app -d -p 3000:4000 --env-file ./.env --name express-container express-img-wed
 ======================================
 
+Start Docker Compose
+- docker-compose up -d
+
+Start Docker Compose and rebuild image
+- docker-compose up -d --build
+
+Down Docker Compose
+- docker-compose down
+
+Inside MongoDB container
+- open Exec tab
+- cd bin
+- mongosh -u admin -p
+
+Once you are connected to MongoDB
+- test by creating database and collection
+
+On VS Code terminal
+- docker exec -it mongo-db-container-name bash
+- cd bin
+- mongosh -u admin -p
+
+======================================
+
+Running docker-compose in dev and prod environment
+
+dev environment
+- docker-compose -f docker-compose.dev.yaml -f docker-compose.yaml up -d
+
+prod environment
+- docker-compose -f docker-compose.prod.yaml -f docker-compose.yaml up -d
+
