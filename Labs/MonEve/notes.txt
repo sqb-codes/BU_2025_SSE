@@ -85,3 +85,28 @@ Command: docker-compose down
 delete anonymous volume as well
 Command: docker-compose down -v
 
+Inside MongoDB container
+- open Exec tab
+- cd bin
+- mongosh -u admin -p
+
+Once you are connected to MongoDB
+- test by creating database and collection
+
+On VS Code terminal
+- docker exec -it mongo-db-container-name bash
+- cd bin
+- mongosh -u admin -p
+
+======================================
+
+Running docker-compose in dev and prod environment
+
+dev environment
+- docker-compose -f docker-compose.dev.yaml -f docker-compose.yaml up -d
+
+prod environment
+- docker-compose -f docker-compose.prod.yaml -f docker-compose.yaml up -d
+
+Run without dependency
+- docker-compose -f docker-compose.dev.yaml -f docker-compose.yaml up -d --no-deps
