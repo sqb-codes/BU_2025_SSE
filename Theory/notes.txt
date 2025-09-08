@@ -59,3 +59,34 @@ docker build -t user-img .
 docker run -v "$(pwd)":/app -d -p 1234:1234 --name user-auth-container user-img
 ============================
 docker-compose up -d
+
+============================
+
+RabbitMQ
+- it's a message broker
+- allows different parts of a system (microservice) to communicate with each other asynchronously by sending and receiving messages through queues
+
+- Services don't need to call each other directly.
+- They just send messages to RabbitMQ, and RabbitMQ ensures that the messages are delivered to the appropriate services.
+
+Message: Piece of data sent from one service to another (JSON, string, number)
+Publisher: Service that sends the message to RabbitMQ
+Consumer: Service that receives the message from RabbitMQ
+Queue: Storage area where messages are stored until they are processed by the consumer
+Exchange: Routing mechanism that decides which quese receives the message
+
+============================
+
+In our case:
+- Order service needs to notify multiple services when an order is placed
+User Service: send confirmation email to user, update user order history
+Product Service: update stock
+
+How we are going to use ?
+Order Service (Publisher): publish order info to RabbitMQ
+User Service (Consumer): listen to order queue, process order info, sends email
+Product Service (Consumer): listen to order queue, process order info, update stock
+
+============================
+
+npm install amqplib
