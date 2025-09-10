@@ -10,7 +10,7 @@ const placeOrder = async (req, res) => {
         const orderProducts = [];
         for(let i = 0; i < products.length; i++) {
             // const product = await Product.findById(products[i].productId);
-            const response = await axios.get(`http://localhost:1235/api/products/${products[i].productId}`);
+            const response = await axios.get(`http://product-service:1235/api/products/getProduct/${products[i].productId}`);
             const product = response.data;
             if(!product) {
                 return res.status(404).json({message: 'Product not found'});
@@ -48,3 +48,5 @@ const placeOrder = async (req, res) => {
         res.status(500).json({message: 'Failed to place order', error});
     }
 }
+
+module.exports = {placeOrder};
