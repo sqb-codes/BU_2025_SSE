@@ -1,4 +1,12 @@
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672" # RabbitMQ server port
+      - "15672:15672" # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
   user-service:
     # Image
     build:
@@ -7,6 +15,33 @@ services:
       - "1234:1234"
     volumes:
       - ./user-service:/app
+    depends_on:
+      - mongo-db
+      - rabbitmq
+
+  product-service:
+    # Image
+    build:
+      context: ./product-service
+    ports:
+      - "1235:1235"
+    volumes:
+      - ./product-service:/app
+    depends_on:
+      - mongo-db
+      - rabbitmq
+
+  order-service:
+    # Image
+    build:
+      context: ./order-service
+    ports:
+      - "1236:1236"
+    volumes:
+      - ./order-service:/app
+    depends_on:
+      - mongo-db
+      - rabbitmq
 
   mongo-db:
     image: mongo:latest
