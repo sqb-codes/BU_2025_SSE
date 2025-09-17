@@ -73,7 +73,7 @@ Message: Piece of data sent from one service to another (JSON, string, number)
 Publisher: Service that sends the message to RabbitMQ
 Consumer: Service that receives the message from RabbitMQ
 Queue: Storage area where messages are stored until they are processed by the consumer
-Exchange: Routing mechanism that decides which quese receives the message
+Exchange: Routing mechanism that decides which queues receives the message
 
 ============================
 
@@ -90,3 +90,26 @@ Product Service (Consumer): listen to order queue, process order info, update st
 ============================
 
 npm install amqplib
+
+userId: "68c19d8f057d4179bd5e3abe"
+productId: "68c19e8d24f1f4b9d9a30629"
+
+============================
+
+Problem with one queue (orderQueue)
+- Both userService and productService were consuming from that one queue only
+- RabbitMQ sends the message in round-robin fashion to multiple consumers on same queue
+- One message - only one consumer
+
+Solution is to create Exchange:
+- Exchange is like a Router in RabbitMQ
+- We pass one argument inside Exchange: fanout
+  - Send every message to all bound queues
+
+============================
+
+TODO:
+- Once order service is up and running successfully:
+  - check first if user is already logged In
+  - send confirmation mail to user about order success or failure
+
