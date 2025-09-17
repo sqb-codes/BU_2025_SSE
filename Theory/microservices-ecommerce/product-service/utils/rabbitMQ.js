@@ -16,6 +16,8 @@ async function connectRabbitMQ(retries = 5, interval = 5000) {
             // Create a channel (virtual connection inside AMQP connection)
             channel = await connection.createChannel();
 
+            await channel.assertExchange("orderExchange", "fanout", { durable: true });
+
             console.log("Connected to RabbitMQ");
             return channel;
         } catch (err) {
@@ -49,8 +51,16 @@ async function consumeMessage(queue, callback) {
         if(!channel) {
             channel = await connectRabbitMQ();
         }
-         // Assert queue BEFORE consuming
+
+        // const queue = "productQueue";
         await channel.assertQueue(queue, { durable: true });
+
+        await channel.bindQueue(queue, "orderExchange", "");
+
+        console.log("Waiting for messages in productQueue...");
+
+         // Assert queue BEFORE consuming
+        // await channel.assertQueue(queue, { durable: true });
         channel.consume(queue, async (msg) => {
             if(msg !== null) {
                 const message = JSON.parse(msg.content.toString());

@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
+const Product = require("./model/Product");
 const {PORT} = require('./utils/config');
 const connectDB = require('./config/db');
 const productRoutes = require('./routes/productRoutes');
@@ -30,7 +31,7 @@ async function processOrder(order) {
 // IIFE to setup RabbitMQ connection and start consuming messages
 (async () => {
   await connectRabbitMQ();
-  await consumeMessage('orderQueue', processOrder);
+  consumeMessage('productQueue', processOrder);
 })();
 
 app.listen(PORT, () => {
