@@ -17,6 +17,8 @@ async function connectRabbitMQ(retries = 5, interval = 5000) {
             // Create a channel (virtual connection inside AMQP connection)
             channel = await connection.createChannel();
 
+            await channel.assertExchange("orderExchange", "fanout", { durable: true });
+
             console.log("Connected to RabbitMQ");
             return channel;
         } catch (err) {
@@ -34,11 +36,18 @@ async function publishMessage(queue, message) {
         if(!channel) {
             channel = await connectRabbitMQ();
         }
-        await channel.assertQueue(queue, {
-            durable: true
-        });
+        // await channel.assertQueue(queue, {
+        //     durable: true
+        // });
         // Step 4: Send the message to the queue
-        channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
+        // channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
+
+        channel.publish(
+            "orderExchange", // exchange name
+            "",              // routing key is ignored in fanout
+            Buffer.from(JSON.stringify(message))
+        );
+
         console.log("Order published to queue:", message);
     } catch (error) {
         console.error("Error in publishing order:", error);
@@ -50,6 +59,16 @@ async function consumeMessage(queue, callback) {
         if(!channel) {
             channel = await connectRabbitMQ();
         }
+
+        // Create a separate queue for this service
+        // const queue = "userQueue";
+        await channel.assertQueue(queue, { durable: true });
+
+        // Bind queue to exchange
+        await channel.bindQueue(queue, "orderExchange", "");
+
+        console.log("Waiting for messages in orderQueue...");
+
         channel.consume(queue, async (msg) => {
             if(msg !== null) {
                 const message = JSON.parse(msg.content.toString());
