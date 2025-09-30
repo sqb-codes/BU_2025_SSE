@@ -113,3 +113,62 @@ TODO:
   - check first if user is already logged In
   - send confirmation mail to user about order success or failure
 
+============================
+
+Logging
+- used for debugging and monitoring the application
+
+1. Centralized Logging: All microservices send their logs to a central system so we can search and analyze them easily in one place
+2. Structured Logging: Use JSON format for logs instead of plain text
+3. Log Levels: Different levels of logs (info, warn, error, debug)
+4. Persistent Storage: Logs should be stored for later analysis
+5. Log Rotation: Automatically delete old logs to save space
+
+Implementation in Node JS
+1. Winston: A popular logging library for Node.js
+2. Morgan: HTTP request logger middleware for Node.js
+3. Bunyan: Great for JSON logging
+4. Pino: Fast and low-overhead logging library for Node.js
+
+============================
+
+npm install winston winston-daily-rotate-file
+
+{
+  "timestamp": "2024-10-01T12:00:00Z",
+  "level": "info",
+  "message": "User created successfully",
+  "service": "user-service",
+  "requestId": "123e4567-e89b-12d3-a456-426614174000"
+  "orderId": "987e6543-e21b-12d3-a456-426614174000"
+}
+
+============================
+
+Redis DB
+- In-memory data structure store, used as a database, cache, and message broker
+
+Features:
+1. Caching
+ - Frequently access data
+   - Store results of DB queries, API calls and other computations
+  - Reduce latency and improve performance
+  - faster response time
+  - Scalibility
+2. Session Management
+  - Store user session data
+  - JWT Token blacklisting
+3. Rate Limiting/throttling
+  - Limit number of requests a user can make to an API within a certain time period
+  - Prevent abuse and ensure fair usage
+4. Pub/Sub Messaging
+  - Implement real-time messaging and notifications
+5. Leaderboards and Counting
+  - Real-time leaderboards, counters, and analytics
+
+Alternatives to Redis
+1. Memcached
+2. Apache Ignite
+3. Hazelcast
+4. Amazon ElastiCache
+5. Aerospike
