@@ -7,6 +7,22 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]  
+    ports:
+      - "6379:6379"
+
+    redis-commander:
+      image: rediscommander/redis-commander:latest
+      ports:
+        - "8081:8081"
+      environment:
+        - REDIS_HOSTS=local:redis:6379
+      depends_on:
+        - redis    
+  
   user-service:
     # Image
     build:
