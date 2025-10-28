@@ -172,3 +172,8 @@ Alternatives to Redis
 3. Hazelcast
 4. Amazon ElastiCache
 5. Aerospike
+
+Cache GET Products:
+1. Setup Redis in docker-compose
+2. npm install ioredis
+
