@@ -1,0 +1,110 @@
+Step - 1 : Create EC2 instance on AWS
+Step - 2 : Connect EC2
+Step - 3 : Install docker and docker compose
+Step - 4 : Install Git
+
+Install Docker
+- sudo yum update -y
+
+Install Docker 
+- sudo yum install -y docker
+
+Start the Docker Service
+- sudo service docker start
+
+Verify the Installation
+- sudo docker run hello-world
+
+Manage Docker as a Non-Root User
+- sudo usermod -aG docker $USER
+- newgrp docker
+
+
+Install Docker Compose
+- sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+Apply executable permissions to the binary
+- sudo chmod +x /usr/local/bin/docker-compose
+
+Verify the installation
+- docker-compose --version
+
+Install Git on EC2
+- sudo yum install git -y
+
+Verify Installation
+- git --version
+
+
+Step - 4 : Now Setup Git and push code
+
+git init
+git add .
+git commit -m "First commit"
+git branch -M main
+git remote add origin https://github.com/SquareBracketsYT/user-service-dep.git
+git push -u origin main
+
+Now Pull code from Git to EC2
+git clone https://github.com/SquareBracketsYT/user-service-dep.git
+
+Setting up docker compose dev 
+
+Create a docker-compose.dev.yaml and put only required service code. 
+Do not include all the services
+
+Updated Code: https://github.com/SquareBracketsYT/user-service-dep/tree/main
+
+If you push some changes on git then run:
+git pull origin main
+
+docker-compose -f docker-compose.dev.yaml up -d --build
+docker ps
+
+
+Now test from Postman
+1. Edit the inbound rules and add port 1234 
+2. Copy public IP and make URL: http:PUBLIC_IP:1234/api/auth/register
+3. Pass data from JSON
+
+
+
+If we get docker builds version warning
+sudo yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine -y
+sudo yum install -y docker
+sudo systemctl enable docker
+sudo systemctl start docker
+
+docker buildx version
+- Should be greater than 0.12
+
+If still issue persist:
+Create plugin directory if not exists
+sudo mkdir -p ~/.docker/cli-plugins/
+
+Download latest Buildx binary (v0.18.0 as of now)
+sudo curl -SL https://github.com/docker/buildx/releases/download/v0.18.0/buildx-v0.18.0.linux-amd64 \
+  -o ~/.docker/cli-plugins/docker-buildx
+
+Make it executable
+sudo chmod +x ~/.docker/cli-plugins/docker-buildx
+
+docker buildx version
+
+If docker is throwing error that daemon not found:
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker $USER
+docker ps
+
+If issue is still there:
+sudo systemctl restart docker
+
+If there is any permission issue:
+sudo chown -R $USER:$USER ~/.docker
+
+Confirm: ls -ld ~/.docker
+
+Now it should say:
+drwx------ 2 ec2-user ec2-user 4096 ...
+
