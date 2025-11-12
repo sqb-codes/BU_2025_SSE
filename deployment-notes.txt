@@ -35,7 +35,7 @@ Install Git on EC2
 Verify Installation
 - git --version
 
-
+// Skip this step as of now
 Step - 4 : Now Setup Git and push code
 
 git init
@@ -45,6 +45,7 @@ git branch -M main
 git remote add origin https://github.com/SquareBracketsYT/user-service-dep.git
 git push -u origin main
 
+// Continue from here
 Now Pull code from Git to EC2
 git clone https://github.com/SquareBracketsYT/user-service-dep.git
 
